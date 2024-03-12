@@ -11,10 +11,13 @@ def about():
     return 'About'
 
 
-@app.route('/teste/<nome>')
-def muda_nome(nome):
-    return transforma_nome(nome)
+@app.route('/teste/<id>')
+def estudante(id):
+    return turma[id]
 
-
-def transforma_nome(nome):
-    return nome.upper()
+    
+turma = {"1": {"nome": "João", "idade": 20, "curso": "Engenharia"},
+         "2": {"nome": "Maria", "idade": 22, "curso": "Medicina"},
+         "3": {"nome": "José", "idade": 21, "curso": "Direito"},
+         "4": {"nome": "Ana", "idade": 23, "curso": "Administração"},
+         "5": {"nome": "Pedro", "idade": 24, "curso": "Contabilidade"}}

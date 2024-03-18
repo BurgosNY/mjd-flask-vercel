@@ -6,15 +6,21 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+
+@app.route('/busca', methods=['GET', 'POST'])
+def busca():
+    return 'Busca'
+
+
 @app.route('/about')
 def about():
-    return 'About'
+    return 'Alguma coisa diferente'
 
 
 @app.route('/teste/<id>')
 def estudante(id):
-    estudante = turma[id]
-    return render_template('estudante.html', estudante=estudante)
+    aluno = turma[id]
+    return render_template('estudante.html', estudante=aluno)
 
     
 turma = {"1": {"nome": "João", "idade": 20, "curso": "Engenharia"},

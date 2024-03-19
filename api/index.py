@@ -1,20 +1,27 @@
 from flask import Flask, render_template, request
+from pymongo import MongoClient
+from dotenv import load_dotenv, find_dotenv 
+import os
+load_dotenv(find_dotenv())
+#Vamos criar uma nova conexão usando esta URI
+
+uri = os.environ.get('MONGODB_URI')
+db = MongoClient(uri, ssl=True, tlsAllowInvalidCertificates=True)['mjd_2024']
 
 app = Flask(__name__)
 # Rota 1
 @app.route('/')
 def home():
+    alunos = db.pedro_alunos_2 
+    turma = alunos.find()
     return render_template('index.html', turma=turma)
 
 
 @app.route('/busca', methods=['GET', 'POST'])
 def busca():
     numero = request.form['nome'] # request.form.get("nome")
-    for aluno in turma:
-        if aluno["id"] == numero:
-            resposta = aluno
-            break
-    return render_template('estudante.html', estudante=resposta)
+    aluno = db.pedro_alunos_2.find_one({"id": numero})
+    return render_template('estudante.html', estudante=aluno)
 
 
 @app.route('/about')
@@ -27,9 +34,3 @@ def estudante(id):
     aluno = turma[id]
     return render_template('estudante.html', estudante=aluno)
 
-    
-turma = [{"id": "1", "nome": "João", "idade": 20, "curso": "Engenharia"},
-         {"id": "2", "nome": "Maria", "idade": 22, "curso": "Medicina"},
-         {"id": "3", "nome": "José", "idade": 21, "curso": "Direito"},
-         {"id": "4", "nome": "Ana", "idade": 23, "curso": "Administração"},
-         {"id": "5", "nome": "Pedro", "idade": 24, "curso": "Contabilidade"}]

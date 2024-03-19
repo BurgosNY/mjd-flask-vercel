@@ -3,8 +3,12 @@
 <body>
     <h1>Olá</h1>
     <form action="/busca" method="post">
-        <label>Selecione o aluno</label>
-        <input type="text" name="nome">
+        <label>Selecione o aluno pelo número (de 1 a 5):</label>
+        <select name="nome">
+            {% for estudante in turma %}
+            <option value="{{estudante.id}}">{{estudante.nome}}</option>
+            {% endfor %}
+          </select>
         <button type="submit">Buscar</button>
     </form>
 </body>

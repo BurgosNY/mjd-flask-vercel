@@ -49,8 +49,8 @@ def investigai_resposta():
     collection = 'teste_rag' # Nome da coleção que estamos usando. Substitua pela sua.
     # Importamos as bibliotecas necessárias da Langchain -- podemos fazer isso no topo do código também para agializar 
     # Os modelos abaixo "conversam" com o banco de dados e com o modelo de linguagem da OpenAI
-    from langchain.embeddings import OpenAIEmbeddings
-    from langchain.vectorstores import MongoDBAtlasVectorSearch
+    from langchain_openai import OpenAIEmbeddings
+    from langchain_community.vectorstores import MongoDBAtlasVectorSearch
     vector_search = MongoDBAtlasVectorSearch.from_connection_string(
         uri_embeddings,
         f'{database}.{collection}', 
@@ -83,7 +83,7 @@ def investigai_resposta():
     )
 
     from langchain.chains import RetrievalQA # Importamos o modelo de perguntas e respostas
-    from langchain.llms import OpenAI # E a ligação com a OpenAI
+    from langchain_openai import OpenAI    
     qa = RetrievalQA.from_chain_type(llm=OpenAI(), # Qual LLM vamos usar para a tarefa
                                      chain_type="stuff", # stuff = "entucha" os documentos na query
                                      retriever=qa_retriever, # O modelo de recuperação que criamos
